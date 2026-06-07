@@ -3,8 +3,10 @@ WORKDIR /src
 
 COPY . .
 
-RUN dotnet restore VLXDManager.csproj
-RUN dotnet publish VLXDManager.csproj -c Release -o /app/publish
+RUN find . -name "*.csproj"
+
+RUN dotnet restore ./VLXDManager/VLXDManager.csproj
+RUN dotnet publish ./VLXDManager/VLXDManager.csproj -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
