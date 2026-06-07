@@ -6,6 +6,7 @@ namespace VLXDManager.Data
     public class VLXDDbContext : DbContext
     {
         public VLXDDbContext(DbContextOptions<VLXDDbContext> options) : base(options) { }
+
         public DbSet<ThanhVien> ThanhVien { get; set; }
         public DbSet<DanhMucLoai> DanhMucLoai { get; set; }
         public DbSet<VatTu> VatTu { get; set; }
@@ -19,20 +20,33 @@ namespace VLXDManager.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Mapping tên bảng
+            modelBuilder.Entity<ThanhVien>().ToTable("ThanhViens");
+            modelBuilder.Entity<DanhMucLoai>().ToTable("DanhMucLoais");
+            modelBuilder.Entity<VatTu>().ToTable("VatTus");
+            modelBuilder.Entity<KhachHang>().ToTable("KhachHangs");
+            modelBuilder.Entity<DonHang>().ToTable("DonHangs");
+            modelBuilder.Entity<ChiTietDonHang>().ToTable("ChiTietDonHangs");
+            modelBuilder.Entity<NhapKho>().ToTable("NhapKhos");
+            modelBuilder.Entity<ChiTietNhapKho>().ToTable("ChiTietNhapKhos");
+
             // VatTu config
-            modelBuilder.Entity<VatTu>(entity => {
+            modelBuilder.Entity<VatTu>(entity =>
+            {
                 entity.HasIndex(e => e.MaHang).IsUnique();
                 entity.Property(e => e.GiaNhap).HasColumnType("decimal(12,2)");
                 entity.Property(e => e.GiaBan).HasColumnType("decimal(12,2)");
             });
 
             // KhachHang config
-            modelBuilder.Entity<KhachHang>(entity => {
+            modelBuilder.Entity<KhachHang>(entity =>
+            {
                 entity.HasIndex(e => e.MaKHCode).IsUnique();
             });
 
             // DonHang config
-            modelBuilder.Entity<DonHang>(entity => {
+            modelBuilder.Entity<DonHang>(entity =>
+            {
                 entity.HasIndex(e => e.SoDH).IsUnique();
                 entity.Property(e => e.TongTien).HasColumnType("decimal(12,2)");
                 entity.Property(e => e.ChietKhau).HasColumnType("decimal(12,2)");
@@ -47,13 +61,15 @@ namespace VLXDManager.Data
             });
 
             // ChiTietDonHang config
-            modelBuilder.Entity<ChiTietDonHang>(entity => {
+            modelBuilder.Entity<ChiTietDonHang>(entity =>
+            {
                 entity.Property(e => e.DonGia).HasColumnType("decimal(12,2)");
                 entity.Property(e => e.ThanhTien).HasColumnType("decimal(12,2)");
             });
 
             // ChiTietNhapKho config
-            modelBuilder.Entity<ChiTietNhapKho>(entity => {
+            modelBuilder.Entity<ChiTietNhapKho>(entity =>
+            {
                 entity.Property(e => e.DonGia).HasColumnType("decimal(12,2)");
                 entity.Property(e => e.ThanhTien).HasColumnType("decimal(12,2)");
             });
