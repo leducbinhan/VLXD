@@ -21,14 +21,14 @@ namespace VLXDManager.Data
             base.OnModelCreating(modelBuilder);
 
             // Mapping tên bảng
-            modelBuilder.Entity<ThanhVien>().ToTable("ThanhViens");
-            modelBuilder.Entity<DanhMucLoai>().ToTable("DanhMucLoais");
-            modelBuilder.Entity<VatTu>().ToTable("VatTus");
-            modelBuilder.Entity<KhachHang>().ToTable("KhachHangs");
-            modelBuilder.Entity<DonHang>().ToTable("DonHangs");
-            modelBuilder.Entity<ChiTietDonHang>().ToTable("ChiTietDonHangs");
-            modelBuilder.Entity<NhapKho>().ToTable("NhapKhos");
-            modelBuilder.Entity<ChiTietNhapKho>().ToTable("ChiTietNhapKhos");
+            modelBuilder.Entity<ThanhVien>().ToTable("ThanhVien");
+            modelBuilder.Entity<DanhMucLoai>().ToTable("DanhMucLoai");
+            modelBuilder.Entity<VatTu>().ToTable("VatTu");
+            modelBuilder.Entity<KhachHang>().ToTable("KhachHang");
+            modelBuilder.Entity<DonHang>().ToTable("DonHang");
+            modelBuilder.Entity<ChiTietDonHang>().ToTable("ChiTietDonHang");
+            modelBuilder.Entity<NhapKho>().ToTable("NhapKho");
+            modelBuilder.Entity<ChiTietNhapKho>().ToTable("ChiTietNhapKho");
 
             // VatTu config
             modelBuilder.Entity<VatTu>(entity =>
