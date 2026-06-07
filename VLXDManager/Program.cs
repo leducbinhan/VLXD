@@ -3,14 +3,17 @@ using VLXDManager.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Add services to the container
 builder.Services.AddControllersWithViews()
     .AddNewtonsoftJson(options =>
-        options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+        options.SerializerSettings.ReferenceLoopHandling =
+            Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-// Add Entity Framework
+// Add Entity Framework SQL Server
 builder.Services.AddDbContext<VLXDDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")
+    ));
 
 // Add Session
 builder.Services.AddSession(options =>
@@ -22,6 +25,14 @@ builder.Services.AddSession(options =>
 
 var app = builder.Build();
 
+// Tự động tạo database và các bảng nếu chưa tồn tại
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<VLXDDbContext>();
+    db.Database.EnsureCreated();
+}
+
+// Configure the HTTP request pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -30,9 +41,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
 app.UseRouting();
-// ✅ Đặt UseSession đúng vị trí theo tài liệu chính thức
+
 app.UseSession();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
